@@ -43,16 +43,34 @@ const users = {
               const token = jwt.sign(
                 {
                   userId: data._id,
+                  userIdentifiant: data.identifiant,
                 },
                 process.env.DB_TOKEN_SECRET_KEY,
                 { expiresIn: maxAge }
               );
               res.json({
                 token: token,
+                identifiant: data.identifiant,
                 message: "Connecté",
               });
             }
           }
+        });
+      }
+    });
+  },
+  GetUser: async (req, res) => {
+    const userId = req.body.userId;
+    const filter = { _id: userId };
+    usersSchema.findOne(filter, (err, data) => {
+      if (err) {
+        res.status(404).json({ message: "Echec" });
+      } else {
+        res.json({
+          message: "reléve réussi:",
+          profil: {
+            identifiant: data.identifiant,
+          },
         });
       }
     });

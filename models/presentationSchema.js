@@ -10,6 +10,11 @@ const presentationSchema = new mongoose.Schema({
           paragraphe: String,
         },
       ],
+      imgIllustration: [
+        {
+          type: String,
+        },
+      ],
     },
   ],
   concept: [
@@ -19,6 +24,11 @@ const presentationSchema = new mongoose.Schema({
         {
           subtitle: String,
           paragraphe: String,
+        },
+      ],
+      imgIllustration: [
+        {
+          type: String,
         },
       ],
     },

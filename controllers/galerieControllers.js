@@ -2,15 +2,19 @@ const galerieSchema = require("../models/galerieSchema");
 
 const galerie = {
   createGalerie: async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, imgIllustration } = req.body;
+    console.log(title, description);
     const newGalerie = new galerieSchema({
       title: title,
       description: description,
+      imgIllustration: imgIllustration,
     });
     newGalerie.save((err, data) => {
       if (err) {
-        res.status(500).json({ message: "Galerie non créée" });
+        console.log("ERRRRRRRRRRRRRREUR");
+        res.status(500).json({ message: "Galerie non créée", err });
       } else {
+        console.log("OKKKKKKKKKKKKKKKKKKKK");
         res.status(200).json(data);
       }
     });

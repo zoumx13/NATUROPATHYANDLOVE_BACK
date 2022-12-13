@@ -10,11 +10,10 @@ const prestationsSchema = new mongoose.Schema({
   resume: {
     type: String,
   },
-  description: [
-    {
-      paragraphe: String,
-    },
-  ],
+  description: {
+    type: String,
+  },
+
   imgIllustration: {
     type: String,
   },

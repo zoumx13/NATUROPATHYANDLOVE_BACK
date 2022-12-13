@@ -7,14 +7,18 @@ const articlesSchema = new mongoose.Schema({
   subtitle: {
     type: String,
   },
-  article: {
+  text: {
     type: String,
   },
+
   imgIllustration: {
     type: String,
   },
   date: {
     type: String,
+  },
+  display: {
+    type: Boolean,
   },
 });
 

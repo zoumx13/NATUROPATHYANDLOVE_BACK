@@ -10,10 +10,10 @@ router.get(
   "/getPrestationDetails/:idPrestation",
   prestations.getPrestationDetails
 );
-router.delete("/deletePrestation/:id", prestations.deletePrestation);
-router.patch("/modifyPrestation/:id", prestations.modifyPrestation);
+router.delete("/deletePrestation/:idPrestation", prestations.deletePrestation);
+router.patch("/modifyPrestation/:idPrestation", prestations.modifyPrestation);
 router.post(
-  "/createImagePrestation/:id",
+  "/createImagePrestation/:idPrestation",
   uploadPrestation.single("file"),
   prestations.addImgPrestation
 );

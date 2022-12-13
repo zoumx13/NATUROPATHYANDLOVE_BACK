@@ -2,51 +2,95 @@ const prestationsSchema = require("../models/prestationsSchema");
 
 const prestations = {
   createPrestation: async (req, res) => {
-    const { title, subtitle, resume, description } = req.body;
+    const { title, subtitle, resume } = req.body;
     const newPrestations = new prestationsSchema({
       title: title,
       subtitle: subtitle,
       resume: resume,
-      description: description,
+      imgIllustration: "galerie1.jpg",
     });
-    newPrestations.save((err, data) => {
-      if (err) {
-        res.status(500).json({ message: "Prestation non créée", err });
-      } else {
-        res.status(200).json(data);
-      }
-    });
+    try {
+      const prestation = await newPrestations.save();
+      return res.status(201).json(prestation._id);
+    } catch (err) {
+      return res.status(404).json(err);
+    }
   },
   modifyPrestation: async (req, res) => {
     const { title, subtitle, resume, description } = req.body;
+    console.log(title, subtitle, resume, description, req.params.idPrestation);
     try {
-      prestationsSchema
-        .findOneAndUpdate(
-          { _id: req.params.id },
-          {
-            $set: {
-              title: title,
-              subtitle: subtitle,
-              resume: resume,
-              description: description,
+      if (title) {
+        prestationsSchema
+          .findOneAndUpdate(
+            { _id: req.params.idPrestation },
+            {
+              $set: {
+                title: title,
+              },
             },
-          },
-          { new: true }
-        )
-        .then((docs) => res.json({ message: "Prestation modifiée", docs }))
-        .catch((err) => res.status(400).send(err));
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Prestation modifiée", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (subtitle) {
+        prestationsSchema
+          .findOneAndUpdate(
+            { _id: req.params.idPrestation },
+            {
+              $set: {
+                subtitle: subtitle,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Prestation modifiée", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (resume) {
+        prestationsSchema
+          .findOneAndUpdate(
+            { _id: req.params.idPrestation },
+            {
+              $set: {
+                resume: resume,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Prestation modifiée", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (description) {
+        prestationsSchema
+          .findOneAndUpdate(
+            { _id: req.params.idPrestation },
+            {
+              $set: {
+                description: description,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Prestation modifiée", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
     } catch (err) {
       return res.status(400).send(err);
     }
   },
   deletePrestation: async (req, res) => {
-    prestationsSchema.findByIdAndRemove({ _id: req.params.id }, (err, data) => {
-      if (err) {
-        res.status(404).json({ message: "error", err });
-      } else {
-        res.status(200).json({ message: "data", data });
+    prestationsSchema.findByIdAndRemove(
+      { _id: req.params.idPrestation },
+      (err, data) => {
+        if (err) {
+          res.status(404).json({ message: "error", err });
+        } else {
+          res.status(200).json({ message: "data", data });
+        }
       }
-    });
+    );
   },
   getPrestations: async (req, res) => {
     prestationsSchema.find({}, (err, data) => {

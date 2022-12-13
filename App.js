@@ -8,6 +8,7 @@ let usersRouter = require("./routes/users");
 let articlesRouter = require("./routes/articles");
 let prestationsRouter = require("./routes/prestations");
 let presentationRouter = require("./routes/presentation");
+let galerieRouter = require("./routes/galerie");
 
 var app = express();
 
@@ -20,10 +21,9 @@ app.use(express.static(path.join(__dirname, "assets/uploads")));
 
 // Création de route ici
 
-// app.use("/", blogRouteur);
 app.use("/", usersRouter);
 app.use("/", articlesRouter);
 app.use("/", prestationsRouter);
 app.use("/", presentationRouter);
-
+app.use("/", galerieRouter);
 module.exports = app;

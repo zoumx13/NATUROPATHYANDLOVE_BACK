@@ -2,37 +2,93 @@ const articlesSchema = require("../models/articlesSchema");
 
 const articles = {
   createPost: async (req, res) => {
-    const { title, subtitle, article } = req.body;
+    const { title, subtitle } = req.body;
     const newArticles = new articlesSchema({
       title: title,
       subtitle: subtitle,
-      article: article,
       date: Date(),
+      display: false,
+      imgIllustration: "galerie1.jpg",
     });
     try {
       const article = await newArticles.save();
-      return res.status(201).json(article);
+      return res.status(201).json(article._id);
     } catch (err) {
       return res.status(404).json(err);
     }
   },
   modifyPost: async (req, res) => {
-    const { title, subtitle, article } = req.body;
+    const { title, subtitle, text, display } = req.body;
+    console.log("display", display);
     try {
-      articlesSchema
-        .findOneAndUpdate(
-          { _id: req.params.id },
-          {
-            $set: {
-              title: title,
-              subtitle: subtitle,
-              aticle: article,
+      if (title) {
+        articlesSchema
+          .findOneAndUpdate(
+            {
+              _id: req.params.idArticle,
             },
-          },
-          { new: true }
-        )
-        .then((docs) => res.json({ message: "article modifié", docs }))
-        .catch((err) => res.status(400).send(err));
+
+            {
+              $set: {
+                title: title,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Article modifié", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (subtitle) {
+        articlesSchema
+          .findOneAndUpdate(
+            {
+              _id: req.params.idArticle,
+            },
+
+            {
+              $set: {
+                subtitle: subtitle,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Article modifié", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (text) {
+        articlesSchema
+          .findOneAndUpdate(
+            {
+              _id: req.params.idArticle,
+            },
+
+            {
+              $set: {
+                text: text,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Article modifié", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
+      if (display === false || display === true) {
+        articlesSchema
+          .findOneAndUpdate(
+            {
+              _id: req.params.idArticle,
+            },
+
+            {
+              $set: {
+                display: display,
+              },
+            },
+            { new: true }
+          )
+          .then((docs) => res.json({ message: "Article modifié", docs }))
+          .catch((err) => res.status(400).send(err));
+      }
     } catch (err) {
       return res.status(400).send(err);
     }
@@ -55,6 +111,16 @@ const articles = {
       }
     });
   },
+  getPostDetails: async (req, res) => {
+    articlesSchema.findById(req.params.idArticle, (err, data) => {
+      if (err) {
+        res.status(404).json({ message: "Echec" });
+      } else {
+        res.json(data);
+      }
+    });
+  },
+
   addImgArticle: (req, res) => {
     if (req.file) {
       const name = req.file.filename;
