@@ -11,7 +11,7 @@ const token = {
       return res.status(401).json({ message: "Token obligatoire." });
     }
 
-    try {
+    try { 
       // Vérification du token
       const data = jwt.verify(token, process.env.DB_TOKEN_SECRET_KEY);
 

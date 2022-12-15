@@ -19,7 +19,6 @@ const articles = {
   },
   modifyPost: async (req, res) => {
     const { title, subtitle, text, display } = req.body;
-    console.log("display", display);
     try {
       if (title) {
         articlesSchema

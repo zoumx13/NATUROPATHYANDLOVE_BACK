@@ -10,3 +10,4 @@ mongoose.connect(`mongodb://127.0.0.1:27017/connexion`, {
 mongoose.connection.once("open", () => {
   console.log("MongoDB is connected");
 });
+ 

@@ -7,4 +7,4 @@ router.post("/connexion", users.SignIn);
 router.post("/inscription", users.CreateUser);
 router.get("/user", token.tokenContext, users.GetUser);
 
-module.exports = router;
+module.exports = router; 
