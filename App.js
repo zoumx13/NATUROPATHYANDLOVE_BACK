@@ -9,6 +9,7 @@ let articlesRouter = require("./routes/articles");
 let prestationsRouter = require("./routes/prestations");
 let presentationRouter = require("./routes/presentation");
 let galerieRouter = require("./routes/galerie");
+let recaptchaRouter = require("./routes/recaptcha")
 
 var app = express();
 
@@ -26,4 +27,6 @@ app.use("/", articlesRouter);
 app.use("/", prestationsRouter);
 app.use("/", presentationRouter);
 app.use("/", galerieRouter);
+app.use("/", recaptchaRouter)
+
 module.exports = app;
